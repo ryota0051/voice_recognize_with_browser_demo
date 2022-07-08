@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  react-app:
+    build:
+      context: ./reactApp
+      args:
+        WORKDIR: "app"
+    volumes:
+      - ./reactApp:/app
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    command: npm start

@@ -2,10 +2,11 @@ import React, { useReducer } from "react"
 
 import useInitializer from "./hooks/setInitialise"
 import StartTranscribeButton from "./components/StartTranscribeButton"
+import ResultTable from "./components/ResultTabel"
 
 function App() {
   const [, forceRender] = useReducer((boolean) => !boolean, false)
-  const { micStream, setMicStrem, resultMsg, setResultMsg, isInitialized } =
+  const { micStream, setMicStrem, resultMsgArr, isInitialized } =
     useInitializer()
   const switchTranscribe = () => {
     if (!micStream) {
@@ -29,7 +30,7 @@ function App() {
         micStream={micStream}
         onClick={switchTranscribe}
       ></StartTranscribeButton>
-      <div>{resultMsg}</div>
+      <ResultTable resultMsgArr={resultMsgArr}></ResultTable>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useReducer, useState } from "react"
 import { Duplex, DuplexOptions } from "readable-stream"
 import MicrophoneStream from "microphone-stream"
 import {
@@ -25,7 +25,13 @@ class AudioStreamer extends Duplex {
 const useInitializer = () => {
   const [recognizer, setRecgnizer] = useState<KaldiRecognizer>()
   const [micStream, setMicStrem] = useState<MicrophoneStream>()
-  const [resultMsg, setResultMsg] = useState<string>("")
+  const [resultMsgArr, setResultMsg] = useReducer(
+    (msgArr: string[], newMsg: string) => [
+      newMsg,
+      ...msgArr.slice(0, msgArr.length - 1),
+    ],
+    Array(Setting.MAX_MSG_LENGTH).fill("")
+  )
   const [isInitialized, setIsInitialized] = useState<Boolean>(false)
 
   const audioStreamer = useMemo(() => {
@@ -46,6 +52,7 @@ const useInitializer = () => {
         if (res.result && res.result.text) {
           console.log(res.result.text)
           setResultMsg(res.result.text)
+          console.log(resultMsgArr)
         }
       })
       recognizer.on("partialresult", (message: any) => {
@@ -95,7 +102,13 @@ const useInitializer = () => {
     createRecorder()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioStreamer, recognizer])
-  return { micStream, setMicStrem, resultMsg, setResultMsg, isInitialized }
+  return {
+    micStream,
+    setMicStrem,
+    resultMsgArr,
+    setResultMsg,
+    isInitialized,
+  }
 }
 
 export default useInitializer

@@ -52,7 +52,6 @@ const useInitializer = () => {
         if (res.result && res.result.text) {
           console.log(res.result.text)
           setResultMsg(res.result.text)
-          console.log(resultMsgArr)
         }
       })
       recognizer.on("partialresult", (message: any) => {

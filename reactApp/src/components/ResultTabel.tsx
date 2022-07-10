@@ -1,24 +1,43 @@
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+} from "@chakra-ui/react"
+
 const ResultTable = ({ resultMsgArr }: { resultMsgArr: string[] }) => {
   return (
-    <table>
-      <thead>
-        <tr>
-          <th colSpan={2}>認識結果</th>
-        </tr>
-      </thead>
-      <tbody>
-        {resultMsgArr.map((resultMsg, index) => {
-          if (resultMsg) {
-            return (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{resultMsg}</td>
-              </tr>
-            )
-          } else return <></>
-        })}
-      </tbody>
-    </table>
+    <TableContainer>
+      <Table size="lg" variant="simple">
+        <Thead>
+          <Tr>
+            <Th textAlign="center" w="100px">
+              Id.
+            </Th>
+            <Th textAlign="center" w="900px">
+              認識結果
+            </Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {resultMsgArr.map((resultMsg, index) => {
+            if (resultMsg) {
+              return (
+                <Tr key={index + 1}>
+                  <Td>{index + 1}.</Td>
+                  <Td>{resultMsg}</Td>
+                </Tr>
+              )
+            } else {
+              return <></>
+            }
+          })}
+        </Tbody>
+      </Table>
+    </TableContainer>
   )
 }
 

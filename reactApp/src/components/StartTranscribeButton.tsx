@@ -1,23 +1,28 @@
+import { Button } from "@chakra-ui/react"
+
 import MicrophoneStream from "microphone-stream"
 
 const StartTranscribeButton = ({
-  isInitialized,
   micStream,
   onClick,
 }: {
-  isInitialized: Boolean
-  micStream: MicrophoneStream | undefined
+  micStream: MicrophoneStream
   onClick: () => void
 }) => {
-  if (!isInitialized || !micStream) {
-    return <div>初期化中</div>
-  }
   if (micStream.isPaused()) {
     const text = "音声認識開始"
-    return <button onClick={onClick}>{text}</button>
+    return (
+      <Button onClick={onClick} colorScheme="teal">
+        {text}
+      </Button>
+    )
   } else {
     const text = "音声認識停止"
-    return <button onClick={onClick}>{text}</button>
+    return (
+      <Button onClick={onClick} colorScheme="teal">
+        {text}
+      </Button>
+    )
   }
 }
 
